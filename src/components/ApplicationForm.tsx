@@ -2,33 +2,37 @@
 
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import Link from 'next/link';
 import axios from 'axios';
 
-interface ApplicationFormData {
-  companyName: string;
-  email: string;
-  phone: string;
-  businessType: string;
-  annualRevenue: number;
-  yearsInBusiness: number;
-  businessAddress: string;
-  directorName: string;
-  directorAge: number;
-  directorCreditScore: number;
-  employeeCount: number;
-  loanAmount: number;
-  loanPurpose: string;
-  documentsUploaded: {
-    pan: boolean;
-    aadhar: boolean;
-    gst: boolean;
-    bankStatements: boolean;
-    taxReturns: boolean;
-    businessProof: boolean;
-    propertyDeed: boolean;
-  };
-}
+const validationSchema = z.object({
+  companyName: z.string().min(1, 'Company name is required'),
+  businessType: z.string().min(1, 'Business type is required'),
+  annualRevenue: z.coerce.number().min(1, 'Annual revenue is required'),
+  yearsInBusiness: z.coerce.number().min(1, 'Years in business is required'),
+  businessAddress: z.string().min(1, 'Business address is required'),
+  directorName: z.string().min(1, 'Director name is required'),
+  directorAge: z.coerce.number().min(21, 'Age must be at least 21').max(65, 'Age must be 65 or less'),
+  directorCreditScore: z.coerce.number().min(300, 'Credit score must be at least 300').max(900, 'Credit score must not exceed 900'),
+  employeeCount: z.coerce.number().min(0, 'Employee count must be 0 or more'),
+  email: z.string().email('Valid email is required'),
+  phone: z.string().regex(/^\d{10}$/, 'Phone must be 10 digits'),
+  loanAmount: z.coerce.number().min(1, 'Loan amount is required'),
+  loanPurpose: z.string().min(1, 'Loan purpose is required'),
+  documentsUploaded: z.object({
+    pan: z.boolean(),
+    aadhar: z.boolean(),
+    gst: z.boolean(),
+    bankStatements: z.boolean(),
+    taxReturns: z.boolean(),
+    businessProof: z.boolean(),
+    propertyDeed: z.boolean(),
+  }),
+});
+
+type ApplicationFormData = z.infer<typeof validationSchema>;
 
 export default function ApplicationForm() {
   const [loading, setLoading] = useState(false);
@@ -36,7 +40,8 @@ export default function ApplicationForm() {
   const [success, setSuccess] = useState<string | null>(null);
   const [applicationId, setApplicationId] = useState<string | null>(null);
 
-  const { control, handleSubmit, formState: { errors } } = useForm<ApplicationFormData>({
+  const { control, handleSubmit, register, formState: { errors } } = useForm<ApplicationFormData>({
+    resolver: zodResolver(validationSchema),
     defaultValues: {
       documentsUploaded: {
         pan: false,
@@ -138,97 +143,99 @@ export default function ApplicationForm() {
                 Business Information
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField
-                  label="Company Name"
-                  type="text"
-                  placeholder="Enter your company name"
-                  register={(field) => (
-                    <input
-                      type="text"
-                      placeholder="Enter your company name"
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Company Name *
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter your company name"
+                    {...register('companyName')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  {errors.companyName && (
+                    <p className="text-red-500 text-sm mt-1">{errors.companyName.message}</p>
                   )}
-                  error={errors.companyName?.message}
-                />
+                </div>
 
-                <FormField
-                  label="Business Type"
-                  register={(field) => (
-                    <select
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    >
-                      <option value="">Select business type</option>
-                      <option value="sole-proprietor">Sole Proprietor</option>
-                      <option value="partnership">Partnership</option>
-                      <option value="pvt-limited">Pvt Limited</option>
-                      <option value="llp">LLP</option>
-                    </select>
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Business Type *
+                  </label>
+                  <select
+                    {...register('businessType')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Select business type</option>
+                    <option value="sole-proprietor">Sole Proprietor</option>
+                    <option value="partnership">Partnership</option>
+                    <option value="pvt-limited">Pvt Limited</option>
+                    <option value="llp">LLP</option>
+                  </select>
+                  {errors.businessType && (
+                    <p className="text-red-500 text-sm mt-1">{errors.businessType.message}</p>
                   )}
-                  error={errors.businessType?.message}
-                />
+                </div>
 
-                <FormField
-                  label="Annual Revenue (₹)"
-                  type="number"
-                  placeholder="1000000"
-                  register={(field) => (
-                    <input
-                      type="number"
-                      placeholder="1000000"
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Annual Revenue (₹) *
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="1000000"
+                    {...register('annualRevenue')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  {errors.annualRevenue && (
+                    <p className="text-red-500 text-sm mt-1">{errors.annualRevenue.message}</p>
                   )}
-                  error={errors.annualRevenue?.message}
-                />
+                </div>
 
-                <FormField
-                  label="Years in Business"
-                  type="number"
-                  placeholder="5"
-                  register={(field) => (
-                    <input
-                      type="number"
-                      placeholder="5"
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Years in Business *
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="5"
+                    {...register('yearsInBusiness')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  {errors.yearsInBusiness && (
+                    <p className="text-red-500 text-sm mt-1">{errors.yearsInBusiness.message}</p>
                   )}
-                  error={errors.yearsInBusiness?.message}
-                />
+                </div>
 
-                <FormField
-                  label="Employee Count"
-                  type="number"
-                  placeholder="10"
-                  register={(field) => (
-                    <input
-                      type="number"
-                      placeholder="10"
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Employee Count *
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="10"
+                    {...register('employeeCount')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  {errors.employeeCount && (
+                    <p className="text-red-500 text-sm mt-1">{errors.employeeCount.message}</p>
                   )}
-                  error={errors.employeeCount?.message}
-                />
+                </div>
 
-                <FormField
-                  label="Business Address"
-                  type="text"
-                  placeholder="Enter business address"
-                  register={(field) => (
-                    <input
-                      type="text"
-                      placeholder="Enter business address"
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Business Address *
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter business address"
+                    {...register('businessAddress')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  {errors.businessAddress && (
+                    <p className="text-red-500 text-sm mt-1">{errors.businessAddress.message}</p>
                   )}
-                  error={errors.businessAddress?.message}
-                />
+                </div>
               </div>
             </div>
 
@@ -238,50 +245,50 @@ export default function ApplicationForm() {
                 Director/Owner Information
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField
-                  label="Director Name"
-                  type="text"
-                  placeholder="Enter director name"
-                  register={(field) => (
-                    <input
-                      type="text"
-                      placeholder="Enter director name"
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Director Name *
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter director name"
+                    {...register('directorName')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  {errors.directorName && (
+                    <p className="text-red-500 text-sm mt-1">{errors.directorName.message}</p>
                   )}
-                  error={errors.directorName?.message}
-                />
+                </div>
 
-                <FormField
-                  label="Director Age"
-                  type="number"
-                  placeholder="45"
-                  register={(field) => (
-                    <input
-                      type="number"
-                      placeholder="45"
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Director Age (21-65) *
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="45"
+                    {...register('directorAge')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  {errors.directorAge && (
+                    <p className="text-red-500 text-sm mt-1">{errors.directorAge.message}</p>
                   )}
-                  error={errors.directorAge?.message}
-                />
+                </div>
 
-                <FormField
-                  label="Credit Score"
-                  type="number"
-                  placeholder="750"
-                  register={(field) => (
-                    <input
-                      type="number"
-                      placeholder="750"
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Credit Score (300-900) *
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="750"
+                    {...register('directorCreditScore')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  {errors.directorCreditScore && (
+                    <p className="text-red-500 text-sm mt-1">{errors.directorCreditScore.message}</p>
                   )}
-                  error={errors.directorCreditScore?.message}
-                />
+                </div>
               </div>
             </div>
 
@@ -291,35 +298,35 @@ export default function ApplicationForm() {
                 Contact Information
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField
-                  label="Email"
-                  type="email"
-                  placeholder="info@company.com"
-                  register={(field) => (
-                    <input
-                      type="email"
-                      placeholder="info@company.com"
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="info@company.com"
+                    {...register('email')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
                   )}
-                  error={errors.email?.message}
-                />
+                </div>
 
-                <FormField
-                  label="Phone (10 digits)"
-                  type="text"
-                  placeholder="9876543210"
-                  register={(field) => (
-                    <input
-                      type="text"
-                      placeholder="9876543210"
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Phone (10 digits) *
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="9876543210"
+                    {...register('phone')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  {errors.phone && (
+                    <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
                   )}
-                  error={errors.phone?.message}
-                />
+                </div>
               </div>
             </div>
 
@@ -329,38 +336,40 @@ export default function ApplicationForm() {
                 Loan Information
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField
-                  label="Loan Amount (₹)"
-                  type="number"
-                  placeholder="500000"
-                  register={(field) => (
-                    <input
-                      type="number"
-                      placeholder="500000"
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Loan Amount (₹) *
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="500000"
+                    {...register('loanAmount')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  {errors.loanAmount && (
+                    <p className="text-red-500 text-sm mt-1">{errors.loanAmount.message}</p>
                   )}
-                  error={errors.loanAmount?.message}
-                />
+                </div>
 
-                <FormField
-                  label="Loan Purpose"
-                  register={(field) => (
-                    <select
-                      {...field}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    >
-                      <option value="">Select purpose</option>
-                      <option value="working-capital">Working Capital</option>
-                      <option value="expansion">Expansion</option>
-                      <option value="equipment">Equipment</option>
-                      <option value="inventory">Inventory</option>
-                      <option value="other">Other</option>
-                    </select>
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Loan Purpose *
+                  </label>
+                  <select
+                    {...register('loanPurpose')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Select purpose</option>
+                    <option value="working-capital">Working Capital</option>
+                    <option value="expansion">Expansion</option>
+                    <option value="equipment">Equipment</option>
+                    <option value="inventory">Inventory</option>
+                    <option value="other">Other</option>
+                  </select>
+                  {errors.loanPurpose && (
+                    <p className="text-red-500 text-sm mt-1">{errors.loanPurpose.message}</p>
                   )}
-                  error={errors.loanPurpose?.message}
-                />
+                </div>
               </div>
             </div>
 
@@ -392,8 +401,8 @@ export default function ApplicationForm() {
                       render={({ field }) => (
                         <input
                           type="checkbox"
-                          {...field}
-                          checked={field.value as any}
+                          checked={field.value as boolean}
+                          onChange={(e) => field.onChange(e.target.checked)}
                           className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
                         />
                       )}
@@ -422,32 +431,6 @@ export default function ApplicationForm() {
           </form>
         </div>
       </div>
-    </div>
-  );
-}
-
-interface FormFieldProps {
-  label: string;
-  type?: string;
-  placeholder?: string;
-  register: (field: any) => React.ReactNode;
-  error?: string;
-}
-
-function FormField({
-  label,
-  register,
-  error,
-}: FormFieldProps) {
-  return (
-    <div>
-      <label className="block text-gray-700 font-medium mb-2">
-        {label}
-      </label>
-      {register({} as any)}
-      {error && (
-        <p className="text-red-500 text-sm mt-1">{error}</p>
-      )}
     </div>
   );
 }
