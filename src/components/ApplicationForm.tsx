@@ -116,55 +116,55 @@ export default function ApplicationForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-6 sm:py-12 px-3 sm:px-4 md:px-6 lg:px-8">
+      <div className="w-full max-w-4xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-8">
-            <h1 className="text-3xl font-bold text-white">
-              SME Loan Pre-Screening Application
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-4 sm:px-6 py-6 sm:py-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              SME Loan Pre-Screening
             </h1>
-            <p className="text-blue-100 mt-2">
+            <p className="text-blue-100 mt-2 text-sm sm:text-base">
               Complete this form for quick eligibility assessment
             </p>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit(onSubmit)} className="p-8 space-y-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8">
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-3 sm:px-4 py-2 sm:py-3 rounded text-sm sm:text-base">
                 {error}
               </div>
             )}
 
             {/* Business Information Section */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4 pb-2 border-b">
                 Business Information
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Company Name *
                   </label>
                   <input
                     type="text"
                     placeholder="Enter your company name"
                     {...register('companyName')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   />
                   {errors.companyName && (
-                    <p className="text-red-500 text-sm mt-1">{errors.companyName.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.companyName.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Business Type *
                   </label>
                   <select
                     {...register('businessType')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   >
                     <option value="">Select business type</option>
                     <option value="sole-proprietor">Sole Proprietor</option>
@@ -173,67 +173,67 @@ export default function ApplicationForm() {
                     <option value="llp">LLP</option>
                   </select>
                   {errors.businessType && (
-                    <p className="text-red-500 text-sm mt-1">{errors.businessType.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.businessType.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Annual Revenue (₹) *
                   </label>
                   <input
                     type="number"
                     placeholder="1000000"
                     {...register('annualRevenue')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   />
                   {errors.annualRevenue && (
-                    <p className="text-red-500 text-sm mt-1">{errors.annualRevenue.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.annualRevenue.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Years in Business *
                   </label>
                   <input
                     type="number"
                     placeholder="5"
                     {...register('yearsInBusiness')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   />
                   {errors.yearsInBusiness && (
-                    <p className="text-red-500 text-sm mt-1">{errors.yearsInBusiness.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.yearsInBusiness.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Employee Count *
                   </label>
                   <input
                     type="number"
                     placeholder="10"
                     {...register('employeeCount')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   />
                   {errors.employeeCount && (
-                    <p className="text-red-500 text-sm mt-1">{errors.employeeCount.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.employeeCount.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Business Address *
                   </label>
                   <input
                     type="text"
                     placeholder="Enter business address"
                     {...register('businessAddress')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   />
                   {errors.businessAddress && (
-                    <p className="text-red-500 text-sm mt-1">{errors.businessAddress.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.businessAddress.message}</p>
                   )}
                 </div>
               </div>
@@ -241,52 +241,52 @@ export default function ApplicationForm() {
 
             {/* Director Information Section */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4 pb-2 border-b">
                 Director/Owner Information
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Director Name *
                   </label>
                   <input
                     type="text"
                     placeholder="Enter director name"
                     {...register('directorName')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   />
                   {errors.directorName && (
-                    <p className="text-red-500 text-sm mt-1">{errors.directorName.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.directorName.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Director Age (21-65) *
                   </label>
                   <input
                     type="number"
                     placeholder="45"
                     {...register('directorAge')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   />
                   {errors.directorAge && (
-                    <p className="text-red-500 text-sm mt-1">{errors.directorAge.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.directorAge.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Credit Score (300-900) *
                   </label>
                   <input
                     type="number"
                     placeholder="750"
                     {...register('directorCreditScore')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   />
                   {errors.directorCreditScore && (
-                    <p className="text-red-500 text-sm mt-1">{errors.directorCreditScore.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.directorCreditScore.message}</p>
                   )}
                 </div>
               </div>
@@ -294,37 +294,37 @@ export default function ApplicationForm() {
 
             {/* Contact Information Section */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4 pb-2 border-b">
                 Contact Information
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Email *
                   </label>
                   <input
                     type="email"
                     placeholder="info@company.com"
                     {...register('email')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   />
                   {errors.email && (
-                    <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.email.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Phone (10 digits) *
                   </label>
                   <input
                     type="text"
                     placeholder="9876543210"
                     {...register('phone')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   />
                   {errors.phone && (
-                    <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.phone.message}</p>
                   )}
                 </div>
               </div>
@@ -332,32 +332,32 @@ export default function ApplicationForm() {
 
             {/* Loan Information Section */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4 pb-2 border-b">
                 Loan Information
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Loan Amount (₹) *
                   </label>
                   <input
                     type="number"
                     placeholder="500000"
                     {...register('loanAmount')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   />
                   {errors.loanAmount && (
-                    <p className="text-red-500 text-sm mt-1">{errors.loanAmount.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.loanAmount.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">
+                  <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Loan Purpose *
                   </label>
                   <select
                     {...register('loanPurpose')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   >
                     <option value="">Select purpose</option>
                     <option value="working-capital">Working Capital</option>
@@ -367,7 +367,7 @@ export default function ApplicationForm() {
                     <option value="other">Other</option>
                   </select>
                   {errors.loanPurpose && (
-                    <p className="text-red-500 text-sm mt-1">{errors.loanPurpose.message}</p>
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.loanPurpose.message}</p>
                   )}
                 </div>
               </div>
@@ -375,13 +375,13 @@ export default function ApplicationForm() {
 
             {/* Documents Section */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4 pb-2 border-b">
                 Documents Ready for Upload
               </h2>
-              <p className="text-gray-600 text-sm mb-4">
+              <p className="text-gray-600 text-xs sm:text-sm mb-4">
                 Check which documents you have ready. Missing documents may affect your eligibility.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {[
                   { key: 'pan', label: 'PAN Card (Required)', critical: true },
                   { key: 'aadhar', label: 'Aadhar Card (Required)', critical: true },
@@ -393,7 +393,7 @@ export default function ApplicationForm() {
                 ].map((doc) => (
                   <label
                     key={doc.key}
-                    className="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
+                    className="flex items-center p-2 sm:p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 text-sm sm:text-base"
                   >
                     <Controller
                       name={`documentsUploaded.${doc.key as keyof ApplicationFormData['documentsUploaded']}`}
@@ -407,7 +407,7 @@ export default function ApplicationForm() {
                         />
                       )}
                     />
-                    <span className="ml-3 text-gray-700">
+                    <span className="ml-2 sm:ml-3 text-gray-700">
                       {doc.label}
                       {doc.critical && (
                         <span className="text-red-500 ml-1">*</span>
@@ -419,11 +419,11 @@ export default function ApplicationForm() {
             </div>
 
             {/* Submit Button */}
-            <div className="pt-6 border-t">
+            <div className="pt-4 sm:pt-6 border-t">
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-bold py-3 px-4 rounded-lg transition"
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-bold py-2.5 sm:py-3 px-4 rounded-lg transition text-sm sm:text-base"
               >
                 {loading ? 'Submitting...' : 'Submit Application'}
               </button>
