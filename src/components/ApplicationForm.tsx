@@ -116,62 +116,9 @@ export default function ApplicationForm() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Corporate Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-        {/* Subtle geometric patterns */}
-        <div className="absolute inset-0 opacity-5">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="corporate-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-                <rect x="0" y="0" width="60" height="60" fill="none"/>
-                <circle cx="30" cy="30" r="2" fill="#3b82f6"/>
-                <rect x="10" y="10" width="8" height="8" fill="none" stroke="#6366f1" strokeWidth="0.5"/>
-                <rect x="42" y="42" width="6" height="6" fill="none" stroke="#8b5cf6" strokeWidth="0.5"/>
-                <line x1="30" y1="15" x2="30" y2="45" stroke="#06b6d4" strokeWidth="0.5"/>
-                <line x1="15" y1="30" x2="45" y2="30" stroke="#06b6d4" strokeWidth="0.5"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#corporate-pattern)"/>
-          </svg>
-        </div>
-
-        {/* Floating business elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 opacity-10">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 80 L50 20 L80 80 Z" stroke="#3b82f6" strokeWidth="1" fill="none"/>
-            <path d="M35 65 L50 35 L65 65 Z" stroke="#6366f1" strokeWidth="1" fill="none"/>
-            <circle cx="50" cy="50" r="3" fill="#8b5cf6"/>
-          </svg>
-        </div>
-
-        <div className="absolute bottom-32 right-16 w-24 h-24 opacity-8">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="20" y="20" width="60" height="40" stroke="#06b6d4" strokeWidth="1" fill="none"/>
-            <rect x="25" y="25" width="50" height="5" fill="#3b82f6"/>
-            <rect x="25" y="35" width="35" height="3" fill="#6366f1"/>
-            <rect x="25" y="42" width="40" height="3" fill="#8b5cf6"/>
-            <line x1="70" y1="30" x2="85" y2="30" stroke="#06b6d4" strokeWidth="1"/>
-            <line x1="70" y1="40" x2="85" y2="40" stroke="#06b6d4" strokeWidth="1"/>
-            <line x1="70" y1="50" x2="85" y2="50" stroke="#06b6d4" strokeWidth="1"/>
-          </svg>
-        </div>
-
-        <div className="absolute top-1/2 left-1/4 w-20 h-20 opacity-6">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="25" stroke="#3b82f6" strokeWidth="1" fill="none"/>
-            <circle cx="50" cy="50" r="15" stroke="#6366f1" strokeWidth="1" fill="none"/>
-            <circle cx="50" cy="50" r="5" fill="#8b5cf6"/>
-            <line x1="50" y1="25" x2="50" y2="75" stroke="#06b6d4" strokeWidth="1"/>
-            <line x1="25" y1="50" x2="75" y2="50" stroke="#06b6d4" strokeWidth="1"/>
-          </svg>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 py-6 sm:py-12 px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="w-full max-w-4xl mx-auto">
-          <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-xl border border-white/20 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-6 sm:py-12 px-3 sm:px-4 md:px-6 lg:px-8">
+      <div className="w-full max-w-4xl mx-auto">
+        <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-xl border border-white/20 overflow-hidden">
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-4 sm:px-6 py-6 sm:py-8">
             <h1 className="text-2xl sm:text-3xl font-bold text-white">
